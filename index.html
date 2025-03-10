@@ -70,10 +70,7 @@
               ><sup>1</sup>RespAI Lab, KIIT University, Bhubaneswar, India</span
             >
             <span><sup>2</sup>RespAI Lab, India</span>
-            <span
-              ><sup>3</sup>Tata Research,
-              India</span
-            >
+            <span><sup>3</sup>Tata Research, India</span>
           </p>
           <p class="correspondence">
             <span
@@ -111,7 +108,33 @@
       <div class="container">
         <h2>Abstract</h2>
         <p>
-          Modern text-to-image generative models can inadvertently reproduce copyrighted content memorized in their training data, raising serious concerns about potential copyright infringement. We introduce Guardians of Generation, a model-agnostic inference-time framework for dynamic copyright shielding in AI image generation. Our approach requires no retraining or modification of the generative model’s weights, instead integrating seamlessly with existing diffusion pipelines. It augments the generation process with an adaptive guidance mechanism comprising three components: a detection module, a prompt rewriting module, and a guidance adjustment module. The detection module monitors user prompts and intermediate generation steps to identify features indicative of copyrighted content before they manifest in the final output. If such content is detected, the prompt rewriting mechanism dynamically transforms the user’s prompt—sanitizing or replacing references that could trigger copyrighted material while preserving the prompt’s intended semantics. The adaptive guidance module adaptively steers the diffusion process away from flagged content by modulating the model’s sampling trajectory. Together, these components form a robust shield that enables a tunable balance between preserving creative fidelity and ensuring copyright compliance. We validate our method on a variety of generative models (Stable Diffusion, SDXL, Flux), demonstrating substantial reductions in copyrighted content generation with negligible impact on output fidelity or alignment with user intent. This work provides a practical, plug-and-play safeguard for generative image models, enabling more responsible deployment under real-world copyright constraints.
+          Modern text-to-image generative models can inadvertently reproduce
+          copyrighted content memorized in their training data, raising serious
+          concerns about potential copyright infringement. We introduce
+          Guardians of Generation, a model-agnostic inference-time framework for
+          dynamic copyright shielding in AI image generation. Our approach
+          requires no retraining or modification of the generative model’s
+          weights, instead integrating seamlessly with existing diffusion
+          pipelines. It augments the generation process with an adaptive
+          guidance mechanism comprising three components: a detection module, a
+          prompt rewriting module, and a guidance adjustment module. The
+          detection module monitors user prompts and intermediate generation
+          steps to identify features indicative of copyrighted content before
+          they manifest in the final output. If such content is detected, the
+          prompt rewriting mechanism dynamically transforms the user’s
+          prompt—sanitizing or replacing references that could trigger
+          copyrighted material while preserving the prompt’s intended semantics.
+          The adaptive guidance module adaptively steers the diffusion process
+          away from flagged content by modulating the model’s sampling
+          trajectory. Together, these components form a robust shield that
+          enables a tunable balance between preserving creative fidelity and
+          ensuring copyright compliance. We validate our method on a variety of
+          generative models (Stable Diffusion, SDXL, Flux), demonstrating
+          substantial reductions in copyrighted content generation with
+          negligible impact on output fidelity or alignment with user intent.
+          This work provides a practical, plug-and-play safeguard for generative
+          image models, enabling more responsible deployment under real-world
+          copyright constraints.
         </p>
       </div>
     </section>
@@ -292,7 +315,8 @@
               </div>
             </div>
             <p class="caption">
-              Spiderman prompt comparison: "web slinging superhero fighting villains"
+              Spiderman prompt comparison: "web slinging superhero fighting
+              villains"
             </p>
           </div>
 
@@ -363,7 +387,7 @@
             <strong>Figure 2:</strong> Transition of generated images with
             different mixing weights (α). Higher values of α allow more
             influence from the rewritten prompt, while lower values favor the
-            original prompt. 
+            original prompt.
           </p>
         </div>
         <p>
@@ -410,11 +434,11 @@
         <h2>Citation</h2>
         <div class="bibtex">
           <pre>
-@article{roy2023guardians,
+@article{roy2025guardians,
     title={Guardians of Generation: Dynamic Inference-Time Copyright Shielding with Adaptive Guidance for AI Image Generation},
     author={Roy, Soham and Mandal, Murari and Mishra, Abhishek and Karande, Shirish},
     journal={arXiv preprint arXiv:xxxx.xxxxx},
-    year={2023},
+    year={2025},
     doi={10.xxxx/xxxxx.xxxxx}
 }
                 </pre
@@ -422,7 +446,6 @@
         </div>
       </div>
     </section>
-
 
     <footer>
       <div class="container">
