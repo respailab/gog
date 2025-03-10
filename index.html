@@ -97,39 +97,43 @@
           >
             <i class="fas fa-file-pdf"></i> Paper (arXiv)
           </a>
-          <a href="#" target="_blank" class="btn">
+          <a
+            href="https://github.com/sohambuilds/gogpipeline"
+            target="_blank"
+            class="btn"
+          >
             <i class="fas fa-code"></i> Code & Data
           </a>
         </div>
       </div>
     </header>
 
-    <section class="abstract">
+    <section id="section-0" class="abstract">
       <div class="container">
         <h2>Abstract</h2>
         <p>
           Modern text-to-image generative models can inadvertently reproduce
           copyrighted content memorized in their training data, raising serious
           concerns about potential copyright infringement. We introduce
-          Guardians of Generation, a model-agnostic inference-time framework for
-          dynamic copyright shielding in AI image generation. Our approach
-          requires no retraining or modification of the generative model’s
-          weights, instead integrating seamlessly with existing diffusion
-          pipelines. It augments the generation process with an adaptive
-          guidance mechanism comprising three components: a detection module, a
-          prompt rewriting module, and a guidance adjustment module. The
-          detection module monitors user prompts and intermediate generation
+          Guardians of Generation (GoG), a model-agnostic inference-time
+          framework for dynamic copyright shielding in AI image generation. Our
+          approach requires no retraining or modification of the generative
+          model's weights, instead integrating seamlessly with existing
+          diffusion pipelines. It augments the generation process with an
+          adaptive guidance mechanism comprising three components: a detection
+          module, a prompt rewriting module, and a guidance adjustment module.
+          The detection module monitors user prompts and intermediate generation
           steps to identify features indicative of copyrighted content before
           they manifest in the final output. If such content is detected, the
-          prompt rewriting mechanism dynamically transforms the user’s
+          prompt rewriting mechanism dynamically transforms the user's
           prompt—sanitizing or replacing references that could trigger
-          copyrighted material while preserving the prompt’s intended semantics.
+          copyrighted material while preserving the prompt's intended semantics.
           The adaptive guidance module adaptively steers the diffusion process
-          away from flagged content by modulating the model’s sampling
+          away from flagged content by modulating the model's sampling
           trajectory. Together, these components form a robust shield that
           enables a tunable balance between preserving creative fidelity and
           ensuring copyright compliance. We validate our method on a variety of
-          generative models (Stable Diffusion, SDXL, Flux), demonstrating
+          generative models (Stable Diffusion 2.1, SDXL, Flux), demonstrating
           substantial reductions in copyrighted content generation with
           negligible impact on output fidelity or alignment with user intent.
           This work provides a practical, plug-and-play safeguard for generative
@@ -139,7 +143,7 @@
       </div>
     </section>
 
-    <section class="overview">
+    <section id="section-1" class="overview">
       <div class="container">
         <h2>Overview</h2>
         <div class="diagram">
@@ -159,12 +163,14 @@
           Our approach introduces a novel adaptive classifier-free guidance
           mechanism that dynamically balances copyright compliance and fidelity
           to the user's intent, addressing a critical challenge in responsible
-          AI deployment.
+          AI deployment. The GoG framework works with existing diffusion models
+          without requiring retraining, making it a practical solution for
+          real-world deployment.
         </p>
       </div>
     </section>
 
-    <section class="method">
+    <section id="section-2" class="method">
       <div class="container">
         <h2>Methodology</h2>
         <div class="two-column">
@@ -173,28 +179,28 @@
             <p>
               We implement semantic matching between user prompts and a database
               of protected concepts, with language model verification to reduce
-              false positives. Our detection mechanism achieves 98.7% accuracy
-              on our benchmark dataset of copyrighted entities, with a false
-              positive rate of only 2.3%.
+              false positives. Our detection mechanism identifies protected
+              entities and prevents copyright infringement by monitoring both
+              explicit references and indirect anchoring cues.
             </p>
 
             <h3>2. Prompt Rewriting</h3>
             <p>
               When protected concepts are detected, an LLM sanitizes the prompt
-              while preserving non-protected elements and the user's intent. The
-              rewritten prompts maintain 89.3% semantic similarity with the
-              original prompts as measured by cosine similarity of embedded
-              representations.
+              while preserving non-protected elements and the user's intent.
+              This maintains semantic similarity with the original prompt while
+              removing potentially infringing content, ensuring the generated
+              images remain aligned with user expectations.
             </p>
           </div>
           <div>
             <h3>3. Adaptive CFG</h3>
             <p>
               Our key innovation blends embeddings from original and rewritten
-              prompts during the diffusion process, allowing controlled
-              generation that balances compliance and creativity. This approach
-              provides significant advantages over naive alternatives such as
-              binary filtering or post-processing.
+              prompts during the diffusion process through adaptive
+              classifier-free guidance (CFG). This mechanism provides a
+              continuous control spectrum between strict copyright compliance
+              and creative expression.
             </p>
 
             <div class="formula">
@@ -215,15 +221,17 @@
       </div>
     </section>
 
-    <section class="results">
+    <section id="section-3" class="results">
       <div class="container">
         <h2>Experimental Results</h2>
         <p class="section-intro">
-          Our approach successfully balances copyright protection with visual
-          quality. Below are comparisons between unprotected and protected
-          generation using different copyrighted entities. Quantitative
-          evaluation includes CLIP score, FID, and human preference studies
-          (n=127).
+          We evaluated our approach on three text-to-image diffusion models
+          (Stable Diffusion 2.1, SDXL, and Flux) using a diverse dataset of 33
+          protected concepts across multiple categories including movie
+          characters, animated figures, brand logos, and portraits. Our
+          experiments demonstrate that GoG successfully balances copyright
+          protection with visual quality, maintaining semantic fidelity while
+          introducing sufficient visual variation to avoid infringement.
         </p>
 
         <div class="gallery">
@@ -366,16 +374,81 @@
             </p>
           </div>
         </div>
+
+        <div class="indirect-anchoring-results">
+          <h3>Indirect Anchoring Protection</h3>
+          <p>
+            A key challenge in copyright protection is addressing indirect
+            anchoring—where prompts use descriptive cues rather than explicitly
+            naming protected entities. Our experiments with cartoon and animated
+            characters demonstrate that GoG effectively mitigates these
+            vulnerabilities. At a guidance scale (η) of 3.0 and mixing weight
+            (α) of 0.7, we achieved a balanced protection profile with optimal
+            CLIP-I (0.84), CLIP-T (0.22), and SSIM (0.50) scores, while
+            significantly reducing detected instances of copyright infringement.
+          </p>
+          <div class="diagram">
+            <img
+              src="images/indirect_anchoring.png"
+              alt="Indirect Anchoring Comparison"
+              class="full-width-img"
+            />
+            <p class="caption">
+              <strong>Figure 3:</strong> Without GoG, models produce copyrighted
+              images even when prompts lack explicit references (top row). Our
+              approach prevents generating protected content while preserving
+              the prompt's semantics (bottom row).
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="mixing-weights">
+    <section id="section-4" class="evaluation-metrics">
+      <div class="container">
+        <h2>Evaluation Metrics</h2>
+        <p class="section-intro">
+          We evaluated our method using six key metrics that measure both
+          semantic fidelity and copyright protection:
+        </p>
+        <ul class="research-list">
+          <li>
+            <strong>CLIP-I & CLIP-T:</strong> Measure semantic alignment between
+            generated images, original copyrighted content, and user prompts
+          </li>
+          <li>
+            <strong>LPIPS:</strong> Quantifies perceptual similarity between
+            original and protected images
+          </li>
+          <li><strong>SSIM:</strong> Assesses structural similarity</li>
+          <li>
+            <strong>CONS:</strong> Employs a VQA model to determine if key
+            visual features of target concepts are present
+          </li>
+          <li>
+            <strong>DETECT:</strong> Counts occurrences of target entities to
+            measure unintended replication
+          </li>
+        </ul>
+        <p>
+          Our experiments show that the GoG framework achieves a balanced range
+          of metrics across different models, with moderate CLIP-I (0.66-0.85),
+          CLIP-T (0.15-0.25), LPIPS (0.40-0.60), and SSIM (0.30-0.40) values.
+          This indicates generated images that remain semantically aligned with
+          user intent while avoiding direct copyright infringement.
+        </p>
+      </div>
+    </section>
+
+    <section id="section-5" class="mixing-weights">
       <div class="container">
         <h2>Parametric Analysis: Effect of Mixing Weight (α)</h2>
         <p class="section-intro">
           The mixing weight parameter allows fine control over the balance
-          between copyright protection and visual fidelity, providing a
-          continuous control mechanism rather than binary filtering.
+          between copyright protection and visual fidelity. Our experiments
+          across different models show that optimal α values typically fall
+          between 0.65-0.75, providing effective copyright protection while
+          maintaining high image quality.
         </p>
         <div class="diagram">
           <img
@@ -387,21 +460,33 @@
             <strong>Figure 2:</strong> Transition of generated images with
             different mixing weights (α). Higher values of α allow more
             influence from the rewritten prompt, while lower values favor the
-            original prompt.
+            original prompt. Analysis conducted over 500 prompt pairs.
           </p>
         </div>
+        <p>Our results indicate different optimal parameters across models:</p>
+        <ul class="research-list">
+          <li>
+            <strong>Stable Diffusion 2.1:</strong> Best results at guidance
+            scale (η) of 8.0 with mixing weight (α) of 0.5
+          </li>
+          <li>
+            <strong>SDXL:</strong> Optimal performance at η=3.0 with α=0.5 or
+            α=0.7
+          </li>
+          <li>
+            <strong>Flux:</strong> Most effective at η=3.0 with α=0.7 for
+            indirect anchoring scenarios
+          </li>
+        </ul>
         <p>
-          Our adaptive classifier-free guidance mechanism provides a continuum
-          of control rather than a binary choice between protection and
-          fidelity. This allows content creators to adjust the level of
-          copyright protection according to their specific needs and risk
-          tolerance, with empirical evaluation suggesting optimal α values
-          between 0.65-0.75 for most use cases.
+          These findings highlight that while the general approach is
+          consistent, fine-tuning parameters for specific models can further
+          optimize the balance between copyright protection and image quality.
         </p>
       </div>
     </section>
 
-    <section class="limitations">
+    <section id="section-6" class="limitations">
       <div class="container">
         <h2>Limitations and Future Work</h2>
         <p>
@@ -409,8 +494,33 @@
           remain. The method relies on a pre-defined database of protected
           concepts, which may not cover all copyrighted materials. Additionally,
           the effectiveness of prompt rewriting depends on the capabilities of
-          the language model used. Future work will focus on:
+          the language model used.
         </p>
+
+        <h3>Performance Considerations</h3>
+        <p>
+          GoG introduces computational overhead that affects generation time:
+        </p>
+        <ul class="research-list">
+          <li>
+            <strong>SD 2.1:</strong> 35.84s without GoG vs. 185.27s with GoG
+          </li>
+          <li>
+            <strong>SDXL:</strong> 38.92s without GoG vs. 187.77s with GoG
+          </li>
+          <li>
+            <strong>Flux:</strong> 56.63s without GoG vs. 251.02s with GoG
+          </li>
+        </ul>
+        <p>
+          These measurements were conducted on a single NVIDIA A6000 GPU. While
+          the additional processing time is significant, the improved control
+          over copyright compliance justifies this overhead for many
+          applications.
+        </p>
+
+        <h3>Future Work</h3>
+        <p>Future research will focus on:</p>
         <ul class="research-list">
           <li>
             Developing more comprehensive protected concept detection through
@@ -425,20 +535,21 @@
             Investigating cross-modal copyright detection between text and
             visual domains
           </li>
+          <li>Optimizing performance to reduce computational overhead</li>
         </ul>
       </div>
     </section>
 
-    <section class="citation">
+    <section id="section-7" class="citation">
       <div class="container">
         <h2>Citation</h2>
         <div class="bibtex">
           <pre>
-@article{roy2025guardians,
+@article{roy2023guardians,
     title={Guardians of Generation: Dynamic Inference-Time Copyright Shielding with Adaptive Guidance for AI Image Generation},
     author={Roy, Soham and Mandal, Murari and Mishra, Abhishek and Karande, Shirish},
     journal={arXiv preprint arXiv:xxxx.xxxxx},
-    year={2025},
+    year={2023},
     doi={10.xxxx/xxxxx.xxxxx}
 }
                 </pre
@@ -449,7 +560,7 @@
 
     <footer>
       <div class="container">
-        <p>&copy; 2025 RespAI Lab. All rights reserved.</p>
+        <p>&copy; 2023 RespAI Lab. All rights reserved.</p>
         <p class="last-updated">Last updated: March 2023</p>
       </div>
     </footer>

@@ -28,50 +28,37 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Create a Table of Contents dynamically
-  const mainContainer = document.querySelector("header .container");
-  if (mainContainer) {
-    const tocContainer = document.createElement("div");
-    tocContainer.className = "toc-container";
+  const tocContainer = document.createElement("div");
+  tocContainer.className = "toc-container";
 
-    const tocTitle = document.createElement("h3");
-    tocTitle.textContent = "Contents";
-    tocContainer.appendChild(tocTitle);
+  const tocTitle = document.createElement("h3");
+  tocTitle.textContent = "Contents";
+  tocContainer.appendChild(tocTitle);
 
-    const tocList = document.createElement("ul");
-    tocList.className = "toc-list";
+  const tocList = document.createElement("ul");
+  tocList.className = "toc-list";
 
-    // Find all section headers
-    const sections = document.querySelectorAll("section");
-    sections.forEach((section, index) => {
-      const sectionTitle = section.querySelector("h2");
-      if (sectionTitle) {
-        // Create an ID for the section if it doesn't exist
-        if (!section.id) {
-          section.id = "section-" + index;
-        }
-
-        const listItem = document.createElement("li");
-        const link = document.createElement("a");
-        link.href = "#" + section.id;
-        link.textContent = sectionTitle.textContent;
-        listItem.appendChild(link);
-        tocList.appendChild(listItem);
+  // Find all section headers
+  const sections = document.querySelectorAll("section");
+  sections.forEach((section, index) => {
+    const sectionTitle = section.querySelector("h2");
+    if (sectionTitle) {
+      // Create an ID for the section if it doesn't exist
+      if (!section.id) {
+        section.id = "section-" + index;
       }
-    });
 
-    tocContainer.appendChild(tocList);
+      const listItem = document.createElement("li");
+      const link = document.createElement("a");
+      link.href = "#" + section.id;
+      link.textContent = sectionTitle.textContent;
+      listItem.appendChild(link);
+      tocList.appendChild(listItem);
+    }
+  });
 
-    // Add TOC toggle button for mobile
-    const tocToggle = document.createElement("button");
-    tocToggle.className = "toc-toggle";
-    tocToggle.innerHTML = '<i class="fas fa-bars"></i> Contents';
-    tocToggle.addEventListener("click", () => {
-      tocContainer.classList.toggle("toc-open");
-    });
-
-    mainContainer.appendChild(tocToggle);
-    document.body.appendChild(tocContainer);
-  }
+  tocContainer.appendChild(tocList);
+  document.body.appendChild(tocContainer);
 
   // Add citation copy feature
   const bibtex = document.querySelector(".bibtex");

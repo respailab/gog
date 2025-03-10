@@ -44,7 +44,7 @@ a:hover {
 .container {
   max-width: var(--container-width);
   margin: 0 auto;
-  padding: 0 var(--spacing-md);
+  padding: 0 var(--spacing-xl);
 }
 
 /* Header */
@@ -437,8 +437,8 @@ footer p {
 /* Back to top button */
 .back-to-top {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  bottom: var(--spacing-md);
+  right: var(--spacing-md);
   background-color: var(--accent);
   color: white;
   width: 3.5rem;
@@ -519,7 +519,7 @@ footer p {
   font-style: italic;
 }
 
-/* Limitations Section */
+/* Academic Paper Enhancements */
 .research-list {
   margin-left: var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
@@ -530,6 +530,7 @@ footer p {
 .research-list li {
   margin-bottom: var(--spacing-sm);
   position: relative;
+  padding-left: 5px;
 }
 
 .research-list li::before {
@@ -543,6 +544,86 @@ footer p {
   background: var(--accent);
 }
 
+.research-list strong {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* Paper-specific sections */
+.evaluation-metrics p,
+.performance p,
+.indirect-anchoring p {
+  text-align: justify;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* Data visualization elements */
+.metrics-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--spacing-md) 0;
+  background-color: rgba(30, 30, 30, 0.4);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.metrics-table th,
+.metrics-table td {
+  padding: 10px 15px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.metrics-table th {
+  background-color: rgba(157, 78, 221, 0.1);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.metrics-table tr:last-child td {
+  border-bottom: none;
+}
+
+.metrics-table tr:hover td {
+  background-color: rgba(157, 78, 221, 0.05);
+}
+
+/* Figure captions */
+.caption strong {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* Section heading adjustments */
+section h2 {
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid rgba(157, 78, 221, 0.2);
+  width: fit-content;
+}
+
+/* Abstract enhancement */
+.abstract {
+  position: relative;
+}
+
+.abstract::after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--accent),
+    transparent
+  );
+}
+
 /* Acknowledgements Section */
 .acknowledgements p {
   color: var(--text-secondary);
@@ -554,11 +635,6 @@ footer p {
   font-size: 0.8rem;
   opacity: 0.7;
   margin-top: var(--spacing-sm);
-}
-
-/* Add figure numbering style */
-.caption strong {
-  color: var(--text-primary);
 }
 
 /* Table of Contents */
@@ -577,6 +653,30 @@ footer p {
   max-height: 80vh;
   overflow-y: auto;
   transition: var(--transition-default);
+  opacity: 0.85;
+  backdrop-filter: blur(5px);
+  left: -220px;
+  transition: left 0.3s ease;
+}
+
+.toc-container:hover {
+  left: 0;
+  opacity: 1;
+}
+
+.toc-container::after {
+  content: "≡ Contents";
+  position: absolute;
+  right: -70px;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  background-color: var(--card-bg);
+  padding: 8px 12px;
+  border-radius: 0 0 8px 8px;
+  font-size: 0.9rem;
+  color: var(--accent);
+  white-space: nowrap;
+  cursor: pointer;
 }
 
 .toc-container h3 {
@@ -590,6 +690,7 @@ footer p {
 .toc-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .toc-list li {
@@ -603,6 +704,7 @@ footer p {
   transition: var(--transition-default);
   color: var(--text-secondary);
   font-size: 0.9rem;
+  text-decoration: none;
 }
 
 .toc-list a:hover {
@@ -611,16 +713,33 @@ footer p {
   padding-left: 12px;
 }
 
-.toc-toggle {
-  display: none;
-  background-color: var(--accent);
-  color: #fff;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: var(--spacing-md);
-  font-size: 0.9rem;
+/* Adjust main content to prevent overlap */
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--container-width);
+  padding: 0 var(--spacing-xl);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .toc-container {
+    left: -230px;
+  }
+
+  .toc-container:hover {
+    left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .toc-container {
+    display: none; /* Hide on mobile */
+  }
+
+  .container {
+    padding: 0 var(--spacing-md);
+  }
 }
 
 /* Image Modal */
@@ -705,4 +824,59 @@ footer p {
   .back-to-top {
     bottom: 5rem;
   }
+}
+
+/* Indirect anchoring results section */
+.indirect-anchoring-results {
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid rgba(157, 78, 221, 0.1);
+}
+
+.indirect-anchoring-results h3 {
+  color: var(--text-primary);
+  font-size: 1.4rem;
+  margin-bottom: var(--spacing-md);
+  position: relative;
+  padding-left: var(--spacing-md);
+}
+
+.indirect-anchoring-results h3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 20px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.indirect-anchoring-results p {
+  text-align: justify;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Limitations section with performance subsection */
+.limitations h3 {
+  color: var(--text-primary);
+  font-size: 1.3rem;
+  margin: var(--spacing-lg) 0 var(--spacing-md);
+  padding-left: var(--spacing-md);
+  position: relative;
+}
+
+.limitations h3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 18px;
+  background: var(--accent);
+  border-radius: 2px;
 }
