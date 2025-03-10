@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Guardians of Generation: Dynamic Inference-Time Copyright Shielding
+    </title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Guardians of Generation</h1>
+        <h2>
+          Dynamic Inference-Time Copyright Shielding with Adaptive Guidance for
+          AI Image Generation
+        </h2>
+
+        <div class="authors">
+          <p>
+            <span>Soham Roy<sup>1</sup></span>
+            <span>Abhishek Mishra<sup>2</sup></span>
+            <span>Murari Mandal<sup>1</sup></span>
+            <span>Shirish Karande<sup>3</sup></span>
+          </p>
+          <p class="affiliations">
+            <span><sup>1</sup>RespAI Lab, KIIT University</span>
+            <span><sup>2</sup>RespAI Lab</span>
+            <span><sup>3</sup>Tata Research</span>
+          </p>
+        </div>
+
+        <div class="links">
+          <a
+            href="https://github.com/username/guardians-of-generation"
+            target="_blank"
+            class="btn"
+          >
+            <i class="fab fa-github"></i> GitHub
+          </a>
+          <a
+            href="https://arxiv.org/abs/xxxx.xxxxx"
+            target="_blank"
+            class="btn"
+          >
+            <i class="fas fa-file-pdf"></i> arXiv
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <section class="abstract">
+      <div class="container">
+        <h2>Abstract</h2>
+        <p>
+          This repository implements an inference-time pipeline that safeguards
+          AI-generated images against copyright infringement. The approach
+          detects protected concepts in user prompts, rewrites them using a
+          large language model (LLM) if necessary, and then generates images
+          using adaptive classifier-free guidance that blends the original and
+          rewritten prompts.
+        </p>
+      </div>
+    </section>
+
+    <section class="overview">
+      <div class="container">
+        <h2>Overview</h2>
+        <div class="diagram">
+          <img
+            src="images/pipeline.png"
+            alt="Pipeline Architecture"
+            class="full-width-img"
+          />
+          <p class="caption">
+            Figure 1: The Dynamic Inference-Time Copyright Shielding Pipeline
+          </p>
+        </div>
+        <p>
+          Our approach introduces a novel adaptive classifier-free guidance
+          mechanism that dynamically balances copyright compliance and fidelity
+          to the user's intent.
+        </p>
+      </div>
+    </section>
+
+    <section class="method">
+      <div class="container">
+        <h2>Method</h2>
+        <div class="two-column">
+          <div>
+            <h3>1. Protected Concept Detection</h3>
+            <p>
+              We implement semantic matching between user prompts and a database
+              of protected concepts, with language model verification to reduce
+              false positives.
+            </p>
+
+            <h3>2. Prompt Rewriting</h3>
+            <p>
+              When protected concepts are detected, an LLM sanitizes the prompt
+              while preserving non-protected elements and the user's intent.
+            </p>
+          </div>
+          <div>
+            <h3>3. Adaptive CFG</h3>
+            <p>
+              Our key innovation blends embeddings from original and rewritten
+              prompts during the diffusion process, allowing controlled
+              generation that balances compliance and creativity.
+            </p>
+
+            <div class="formula">
+              <p>Adaptive CFG Formula:</p>
+              <p>
+                ε<sub>θ</sub>(x<sub>t</sub>, c) = ε<sub>θ</sub>(x<sub>t</sub>) +
+                λ(αε<sub>θ</sub>(x<sub>t</sub>, c<sub>orig</sub>) +
+                (1-α)ε<sub>θ</sub>(x<sub>t</sub>, c<sub>safe</sub>) -
+                ε<sub>θ</sub>(x<sub>t</sub>))
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="results">
+      <div class="container">
+        <h2>Results</h2>
+        <p class="section-intro">
+          Our approach successfully balances copyright protection with visual
+          quality. Below are comparisons between unprotected and protected
+          generation using different copyrighted entities.
+        </p>
+
+        <div class="gallery">
+          <!-- Example 1: Pikachu -->
+          <div class="result-set">
+            <div class="comparison">
+              <div class="result-item">
+                <img
+                  src="images/pikachu.png"
+                  alt="Original Generation of Pikachu"
+                />
+                <p>Original (Unprotected)</p>
+              </div>
+              <div class="result-item">
+                <img
+                  src="images/p_pikachu.png"
+                  alt="Protected Generation of Pikachu"
+                />
+                <p>Protected (α = 0.7)</p>
+              </div>
+            </div>
+            <p class="caption">Pikachu prompt comparison</p>
+          </div>
+
+          <!-- Example 2: Elon Musk -->
+          <div class="result-set">
+            <div class="comparison">
+              <div class="result-item">
+                <img
+                  src="images/elonmusk.png"
+                  alt="Original Generation of Elon Musk"
+                />
+                <p>Original (Unprotected)</p>
+              </div>
+              <div class="result-item">
+                <img
+                  src="images/p_elonmusk.png"
+                  alt="Protected Generation of Elon Musk"
+                />
+                <p>Protected (α = 0.7)</p>
+              </div>
+            </div>
+            <p class="caption">Elon Musk prompt comparison</p>
+          </div>
+
+          <!-- Example 3: Mario -->
+          <div class="result-set">
+            <div class="comparison">
+              <div class="result-item">
+                <img
+                  src="images/mario.png"
+                  alt="Original Generation of Mario"
+                />
+                <p>Original (Unprotected)</p>
+              </div>
+              <div class="result-item">
+                <img
+                  src="images/p_mario.png"
+                  alt="Protected Generation of Mario"
+                />
+                <p>Protected (α = 0.7)</p>
+              </div>
+            </div>
+            <p class="caption">Mario prompt comparison</p>
+          </div>
+
+          <!-- Example 4: Spiderman -->
+          <div class="result-set">
+            <div class="comparison">
+              <div class="result-item">
+                <img
+                  src="images/spiderman.png"
+                  alt="Original Generation of Spiderman"
+                />
+                <p>Original (Unprotected)</p>
+              </div>
+              <div class="result-item">
+                <img
+                  src="images/p_spiderman.png"
+                  alt="Protected Generation of Spiderman"
+                />
+                <p>Protected (α = 0.7)</p>
+              </div>
+            </div>
+            <p class="caption">Spiderman prompt comparison</p>
+          </div>
+
+          <!-- Example 5: Shrek -->
+          <div class="result-set">
+            <div class="comparison">
+              <div class="result-item">
+                <img
+                  src="images/shrek.png"
+                  alt="Original Generation of Shrek"
+                />
+                <p>Original (Unprotected)</p>
+              </div>
+              <div class="result-item">
+                <img
+                  src="images/p_shrek.png"
+                  alt="Protected Generation of Shrek"
+                />
+                <p>Protected (α = 0.7)</p>
+              </div>
+            </div>
+            <p class="caption">Shrek prompt comparison</p>
+          </div>
+
+          <!-- Example 6: Batman -->
+          <div class="result-set">
+            <div class="comparison">
+              <div class="result-item">
+                <img
+                  src="images/Batman.png"
+                  alt="Original Generation of Buzz Lightyear"
+                />
+                <p>Original (Unprotected)</p>
+              </div>
+              <div class="result-item">
+                <img
+                  src="images/p_Batman.png"
+                  alt="Protected Generation of Buzz Lightyear"
+                />
+                <p>Protected (α = 0.7)</p>
+              </div>
+            </div>
+            <p class="caption">Buzz Lightyear prompt comparison</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mixing-weights">
+      <div class="container">
+        <h2>Effect of Mixing Weight (α)</h2>
+        <p class="section-intro">
+          The mixing weight parameter allows fine control over the balance
+          between copyright protection and visual fidelity.
+        </p>
+        <div class="diagram">
+          <img
+            src="images/Transition.png"
+            alt="Mixing Weight Comparison"
+            class="full-width-img"
+          />
+          <p class="caption">
+            Figure: Transition of generated images with different mixing weights
+            (α). Higher values of α allow more influence from the rewritten
+            prompt, while lower values favor the original prompt.
+          </p>
+        </div>
+        <p>
+          Our adaptive classifier-free guidance mechanism provides a continuum
+          of control rather than a binary choice between protection and
+          fidelity. This allows content creators to adjust the level of
+          copyright protection according to their specific needs and risk
+          tolerance.
+        </p>
+      </div>
+    </section>
+
+    <section class="citation">
+      <div class="container">
+        <h2>Citation</h2>
+        <div class="bibtex">
+          <pre>
+@article{roy2023guardians,
+    title={Guardians of Generation: Dynamic Inference-Time Copyright Shielding with Adaptive Guidance for AI Image Generation},
+    author={Roy, Soham and Mandal, Murari and Mishra, Abhishek and Karande, Shirish},
+    journal={arXiv preprint arXiv:xxxx.xxxxx},
+    year={2023}
+}
+                </pre
+          >
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2023 RespAI Lab. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
