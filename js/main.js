@@ -27,6 +27,110 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  // Create a Table of Contents dynamically
+  const mainContainer = document.querySelector("header .container");
+  if (mainContainer) {
+    const tocContainer = document.createElement("div");
+    tocContainer.className = "toc-container";
+
+    const tocTitle = document.createElement("h3");
+    tocTitle.textContent = "Contents";
+    tocContainer.appendChild(tocTitle);
+
+    const tocList = document.createElement("ul");
+    tocList.className = "toc-list";
+
+    // Find all section headers
+    const sections = document.querySelectorAll("section");
+    sections.forEach((section, index) => {
+      const sectionTitle = section.querySelector("h2");
+      if (sectionTitle) {
+        // Create an ID for the section if it doesn't exist
+        if (!section.id) {
+          section.id = "section-" + index;
+        }
+
+        const listItem = document.createElement("li");
+        const link = document.createElement("a");
+        link.href = "#" + section.id;
+        link.textContent = sectionTitle.textContent;
+        listItem.appendChild(link);
+        tocList.appendChild(listItem);
+      }
+    });
+
+    tocContainer.appendChild(tocList);
+
+    // Add TOC toggle button for mobile
+    const tocToggle = document.createElement("button");
+    tocToggle.className = "toc-toggle";
+    tocToggle.innerHTML = '<i class="fas fa-bars"></i> Contents';
+    tocToggle.addEventListener("click", () => {
+      tocContainer.classList.toggle("toc-open");
+    });
+
+    mainContainer.appendChild(tocToggle);
+    document.body.appendChild(tocContainer);
+  }
+
+  // Add citation copy feature
+  const bibtex = document.querySelector(".bibtex");
+  if (bibtex) {
+    const copyButton = document.createElement("button");
+    copyButton.className = "copy-button";
+    copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy Citation';
+    bibtex.appendChild(copyButton);
+
+    copyButton.addEventListener("click", async () => {
+      const text = bibtex.querySelector("pre").textContent.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+        copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        setTimeout(() => {
+          copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy Citation';
+        }, 2000);
+      } catch (err) {
+        console.error("Failed to copy text: ", err);
+      }
+    });
+  }
+
+  // Image comparison interaction
+  const resultItems = document.querySelectorAll(".result-item img");
+  resultItems.forEach((img) => {
+    img.addEventListener("click", function () {
+      // Create modal for larger image view
+      const modal = document.createElement("div");
+      modal.className = "image-modal";
+
+      const modalImg = document.createElement("img");
+      modalImg.src = this.src;
+      modalImg.alt = this.alt;
+
+      const caption = document.createElement("p");
+      caption.textContent = this.alt;
+
+      const closeBtn = document.createElement("button");
+      closeBtn.className = "modal-close";
+      closeBtn.innerHTML = "&times;";
+      closeBtn.addEventListener("click", () => {
+        document.body.removeChild(modal);
+      });
+
+      modal.appendChild(closeBtn);
+      modal.appendChild(modalImg);
+      modal.appendChild(caption);
+      document.body.appendChild(modal);
+
+      // Close on click outside image
+      modal.addEventListener("click", function (e) {
+        if (e.target === modal) {
+          document.body.removeChild(modal);
+        }
+      });
+    });
+  });
+
   // Fade in sections as they come into view with staggered animation
   const observerOptions = {
     root: null,
@@ -69,24 +173,13 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Add hover effect to BibTeX
-  const bibtex = document.querySelector(".bibtex");
   if (bibtex) {
-    const copyButton = document.createElement("button");
-    copyButton.className = "copy-button";
-    copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy Citation';
-    bibtex.appendChild(copyButton);
+    bibtex.addEventListener("mouseenter", () => {
+      bibtex.style.borderColor = "rgba(157, 78, 221, 0.4)";
+    });
 
-    copyButton.addEventListener("click", async () => {
-      const text = bibtex.querySelector("pre").textContent.trim();
-      try {
-        await navigator.clipboard.writeText(text);
-        copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
-        setTimeout(() => {
-          copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy Citation';
-        }, 2000);
-      } catch (err) {
-        console.error("Failed to copy text: ", err);
-      }
+    bibtex.addEventListener("mouseleave", () => {
+      bibtex.style.borderColor = "";
     });
   }
 
